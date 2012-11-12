@@ -6,7 +6,7 @@ porygon
 ## Overview
 a simple virtual memory manager “virtualmem” in  C/C++ on a UNIX-based platform.
  
-** Due date: Nov 19 2012 **
+Due date: Nov 19 2012
 
 ## Member
 Si Chen
