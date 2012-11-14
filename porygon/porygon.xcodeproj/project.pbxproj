@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3BA3CF0B1651A064004101A0 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 3BA3CF0A1651A064004101A0 /* main.c */; };
 		3BA3CF0D1651A064004101A0 /* porygon.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3BA3CF0C1651A064004101A0 /* porygon.1 */; };
+		3BA3CF18165333E3004101A0 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 3BA3CF17165333E3004101A0 /* Makefile */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,6 +29,7 @@
 		3BA3CF061651A064004101A0 /* porygon */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = porygon; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BA3CF0A1651A064004101A0 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		3BA3CF0C1651A064004101A0 /* porygon.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = porygon.1; sourceTree = "<group>"; };
+		3BA3CF17165333E3004101A0 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 			children = (
 				3BA3CF0A1651A064004101A0 /* main.c */,
 				3BA3CF0C1651A064004101A0 /* porygon.1 */,
+				3BA3CF17165333E3004101A0 /* Makefile */,
 			);
 			path = porygon;
 			sourceTree = "<group>";
@@ -118,6 +121,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3BA3CF0B1651A064004101A0 /* main.c in Sources */,
+				3BA3CF18165333E3004101A0 /* Makefile in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,6 +153,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				New_Setting = "";
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -173,6 +178,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				New_Setting = "";
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -210,6 +216,7 @@
 				3BA3CF121651A064004101A0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
