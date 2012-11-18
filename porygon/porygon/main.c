@@ -6,19 +6,12 @@
 //  Copyright (c) 2012 Si Chen. All rights reserved.
 //
 
-#include <stdio.h>
-#include <ctype.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <fcntl.h>
+
 #include "main.h"
-#define LENGTH 102400
 /* global variables */
 int FRAMES = 5; // set the number of avaliable frames. Default is 5
 char *POLICY_R = NULL;
-int POLICY = 0; // set the replacement policy 0:FIFO 1:LRU 2:LRU-STACK 3:LRU-CLOCK 4:LRU-REF8
+int POLICY = 0; // set the replacement policy 0:FIFO 1:LFU 2:LRU-STACK 3:LRU-CLOCK 4:LRU-REF8
 int INPUT_SOURCE = 0; // set the input source 0:STDIN 1:FILE
 int HELP = 0; // print usage? 0:disable 1:enable
 int SEQ_SIZE = 0;
@@ -125,101 +118,49 @@ int main(int argc, char **argv)
     if(INPUT_SOURCE == 0){
         printf("Please input the page reference sequence, end with ENTER:");
         fgets(seq,sizeof(seq),stdin);
+        char* count = input_seq;
+        while(*count != '\n'){
+            SEQ_SIZE++;
+            count++;
+        }
+#ifdef DEBUG
+        printf("%d\n",SEQ_SIZE);
+#endif
     }
     
 #ifdef DEBUG
     printf("input sequence:%s",input_seq);
 #endif
     
-    if(POLICY == 0){
+    if(POLICY == 0){ //FIFO
+        int FRAME_1 = FRAMES;
         queue* q = (queue*) malloc(sizeof(queue));
         do_fifo(q, input_seq, FRAMES);
+        do_optimal(input_seq, FRAME_1);
+        //printf("\n%d",PAGE_REPLACEMENT);
+        printf("\n");
+        printf("# of page replacements with FIFO	:%d \n",PAGE_REPLACEMENT);
+        printf("# of page replacements with OPTIMAL	:%d \n",PAGE_REPLACEMENT_OPT);
+    }
+    else if(POLICY == 1){ //LFU
+        int FRAME_1 = FRAMES;
+        do_lfu(input_seq, FRAMES);
+        do_optimal(input_seq, FRAME_1);
+        printf("\n");
+        printf("# of page replacements with LFU 	:%d \n",PAGE_REPLACEMENT);
+        printf("# of page replacements with OPTIMAL	:%d \n",PAGE_REPLACEMENT_OPT);
+    }
+    else if(POLICY == 2){ //LRU-STACK
+        int FRAME_1 = FRAMES;
+        Queue *pq = InitQueue();
+        do_lru_stack(pq, input_seq, FRAMES);
+        do_optimal(input_seq, FRAME_1);
+        printf("\n");
+        printf("# of page replacements with LRU-STACK :%d \n",PAGE_REPLACEMENT);
+        printf("# of page replacements with OPTIMAL	:%d \n",PAGE_REPLACEMENT_OPT);
     }
     
-    
-    return 0;
-}
-int do_fifo(queue* queue,char* input_seq, int frames){
-    fifo_init_queue(queue);
-   
-    for(int i=0; i<SEQ_SIZE; i++){
-        int ref_num = atoi(input_seq);
-        if(ref_num >= 0){
-            int exist = fifo_seek_queue(queue,ref_num);
-            if(exist == 1){ // not exists
-                if(FRAMES-- <= 0){
-                    fifo_remove_node(queue);
-                }
-                node* new_node = (node*) malloc(sizeof(node));
-                new_node->ref_num = atoi(input_seq);
-                fifo_add_node(new_node, queue);
-                PAGE_REPLACEMENT ++;
-            }
-        }
-        input_seq++;
-    }
-    printf("PAGE REPLACEMENT TIME:%d",PAGE_REPLACEMENT);
     return 0;
 }
 
-int fifo_seek_queue(queue *queue, int new_ref_num){
-    node* current_node;
-    int i = 0;
-    if(queue-> head == NULL)
-        return 1;
-    current_node = queue->head;
-    do {
-        if(current_node->ref_num == new_ref_num){
-            return 0;
-        }
-        current_node = current_node->next;
-        i++;
-    }while(i < queue->node_num);
-    return 1;
-}
 
-int fifo_init_queue(queue* queue){
-    if(queue == NULL)
-        return 1;
-    queue->head = NULL;
-    queue->tail = NULL;
-    queue->node_num = 0;
-    return 0;
-}
-
-int fifo_add_node(node* node,queue* queue)
-{
-    node->next = NULL;
-    node->prev = NULL;
-    if(queue->node_num == 0){
-        queue->head = node;
-        queue->tail = node;
-    }
-    else{
-        node->next = queue->head;
-        queue->head->prev = node;
-        queue->head = node;
-    }
-    queue->node_num++;
-    return 0;
-}
-
-int fifo_remove_node(queue* queue)
-{
-    if(queue == NULL)
-        return 1;
-    switch (queue->node_num) {
-        case 0:
-            return 1;
-        case 1:
-            queue->head=NULL;
-            queue->tail=NULL;
-            break;
-        default:
-            queue->tail->prev->next = NULL;
-            queue->tail = queue->tail->prev;
-    }
-    queue->node_num--;
-    return 0;
-    
-}
