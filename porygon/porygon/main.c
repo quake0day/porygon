@@ -10,7 +10,7 @@
 #include "main.h"
 /* global variables */
 int FRAMES = 5; // set the number of avaliable frames. Default is 5
-char *POLICY_R = NULL;
+char *POLICY_R = "FIFO";
 int POLICY = 0; // set the replacement policy 0:FIFO 1:LFU 2:LRU-STACK 3:LRU-CLOCK 4:LRU-REF8
 int INPUT_SOURCE = 0; // set the input source 0:STDIN 1:FILE
 int HELP = 0; // print usage? 0:disable 1:enable

@@ -20,7 +20,7 @@
 #include<sys/types.h>
 #include<sys/time.h>
 
-#define LENGTH 1024
+#define LENGTH 10240
 /* global variables */
 extern int FRAMES; // set the number of avaliable frames. Default is 5
 extern char *POLICY_R;
