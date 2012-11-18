@@ -61,7 +61,12 @@ int do_lfu(char* input_seq, int FRAMES)
 int lfu_replace_vic(int* m, long vic_num, int ref_num, int array_length){
     for(int i = 0; i < array_length; i++){
         if(*m == vic_num){
-            *m = ref_num;
+            while(i< array_length){
+                *m = *(m+1);
+                m++;
+                i++;
+            }
+            *--m = ref_num;
             return 0;
         }
         m++;
@@ -75,7 +80,7 @@ int lfu_replace_vic(int* m, long vic_num, int ref_num, int array_length){
  */
 long lfu_find_vic(int* k, int* old, int length){
     int* m = k;
-    long vic=0;
+    long vic= 999999999999999;
     int j=0;
     long dead_num=0;
     for(int i = 0; i < length; i++){

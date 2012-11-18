@@ -10,6 +10,9 @@
 		3B9FD73216581506004A1314 /* optimal.c in Sources */ = {isa = PBXBuildFile; fileRef = 3B9FD73116581506004A1314 /* optimal.c */; };
 		3B9FD73516582CA8004A1314 /* lfu.c in Sources */ = {isa = PBXBuildFile; fileRef = 3B9FD73416582CA8004A1314 /* lfu.c */; };
 		3B9FD73716585DD6004A1314 /* lru_stack.c in Sources */ = {isa = PBXBuildFile; fileRef = 3B9FD73616585DD6004A1314 /* lru_stack.c */; };
+		3B9FD739165862C7004A1314 /* queue.c in Sources */ = {isa = PBXBuildFile; fileRef = 3B9FD738165862C7004A1314 /* queue.c */; };
+		3B9FD73B16588E5C004A1314 /* lru_clock.c in Sources */ = {isa = PBXBuildFile; fileRef = 3B9FD73A16588E5C004A1314 /* lru_clock.c */; };
+		3B9FD73D1658B1E9004A1314 /* lru_ref8.c in Sources */ = {isa = PBXBuildFile; fileRef = 3B9FD73C1658B1E9004A1314 /* lru_ref8.c */; };
 		3BA3CF0B1651A064004101A0 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 3BA3CF0A1651A064004101A0 /* main.c */; };
 		3BA3CF0D1651A064004101A0 /* porygon.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3BA3CF0C1651A064004101A0 /* porygon.1 */; };
 		3BA3CF18165333E3004101A0 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 3BA3CF17165333E3004101A0 /* Makefile */; };
@@ -33,6 +36,9 @@
 		3B9FD73116581506004A1314 /* optimal.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = optimal.c; sourceTree = "<group>"; };
 		3B9FD73416582CA8004A1314 /* lfu.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lfu.c; sourceTree = "<group>"; };
 		3B9FD73616585DD6004A1314 /* lru_stack.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lru_stack.c; sourceTree = "<group>"; };
+		3B9FD738165862C7004A1314 /* queue.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = queue.c; sourceTree = "<group>"; };
+		3B9FD73A16588E5C004A1314 /* lru_clock.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lru_clock.c; sourceTree = "<group>"; };
+		3B9FD73C1658B1E9004A1314 /* lru_ref8.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lru_ref8.c; sourceTree = "<group>"; };
 		3BA3CF061651A064004101A0 /* porygon */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = porygon; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BA3CF0A1651A064004101A0 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		3BA3CF0C1651A064004101A0 /* porygon.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = porygon.1; sourceTree = "<group>"; };
@@ -79,6 +85,9 @@
 				3B9FD73116581506004A1314 /* optimal.c */,
 				3B9FD73416582CA8004A1314 /* lfu.c */,
 				3B9FD73616585DD6004A1314 /* lru_stack.c */,
+				3B9FD738165862C7004A1314 /* queue.c */,
+				3B9FD73A16588E5C004A1314 /* lru_clock.c */,
+				3B9FD73C1658B1E9004A1314 /* lru_ref8.c */,
 			);
 			path = porygon;
 			sourceTree = "<group>";
@@ -140,6 +149,9 @@
 				3B9FD73216581506004A1314 /* optimal.c in Sources */,
 				3B9FD73516582CA8004A1314 /* lfu.c in Sources */,
 				3B9FD73716585DD6004A1314 /* lru_stack.c in Sources */,
+				3B9FD739165862C7004A1314 /* queue.c in Sources */,
+				3B9FD73B16588E5C004A1314 /* lru_clock.c in Sources */,
+				3B9FD73D1658B1E9004A1314 /* lru_ref8.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

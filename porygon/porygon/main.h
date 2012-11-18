@@ -17,6 +17,8 @@
 #include <string.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include<sys/types.h>
+#include<sys/time.h>
 
 #define LENGTH 1024
 /* global variables */
@@ -29,7 +31,7 @@ extern int SEQ_SIZE;
 extern int PAGE_REPLACEMENT;
 extern int PAGE_REPLACEMENT_OPT;
 
-
+typedef unsigned int uint;
 typedef struct queue
 {
     struct node *head;
@@ -49,6 +51,9 @@ typedef int Item;
 typedef struct QNode
 {
     Item data;
+    Item HP;
+    Item reference;
+    Item shift;
     struct QNode* next;
 }QNode;
 
@@ -73,6 +78,14 @@ typedef struct{
     StackNode *bottom;
 }LinkStack;
 */
+int do_lru_ref8(Queue* queue,char* input_seq, int frames);
+int right_shift_miss(int k);
+int right_shift_hit(int k);
+int right_shift_all(Queue* pqueue);
+int ref8_find_vic(Queue* pqueue);
+int ref8_remove_vic(Queue* pqueue, int target_data);
+int do_lru_clock(Queue* queue,char* input_seq, int frames);
+int Pop_or_HP_decrease(Queue *pqueue, int *k, int pos);
 int do_lru_stack(Queue* queue,char* input_seq, int frames);
 int judge_if_exists(int data, int ref_num);
 int QueueTraverse(Queue *pqueue,int ref_num, int(*visit)());

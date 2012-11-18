@@ -45,10 +45,12 @@ int main(int argc, char **argv)
                 if(fp != 0){ //file exist
                     i = 0;
                     while((c = fgetc(fp)) != EOF){ //read it word by word
+                        if(c != '\n'){  // if not add this, certain BUG may happen.
                         //printf("%c",c);
                         seq[i] = c;
                         i++;
                         SEQ_SIZE++;
+                        }
                     }
                     INPUT_SOURCE = 1;
                 }else{
@@ -67,6 +69,7 @@ int main(int argc, char **argv)
                 char *str2="LFU";
                 char *str3="LRU-STACK";
                 char *str4="LRU-CLOCK";
+                char *str5="LRU-REF8";
                 if(strcmp(POLICY_R,str1)==0)
                 {
                     POLICY=0;
@@ -79,6 +82,9 @@ int main(int argc, char **argv)
                 }
                 else if(strcmp(POLICY_R,str4)==0){
                     POLICY=3;
+                }
+                else if(strcmp(POLICY_R,str5)==0){
+                    POLICY=4;
                 }
                 else{
                     fprintf(stderr,"Unknown option\n");
@@ -129,38 +135,79 @@ int main(int argc, char **argv)
     }
     
 #ifdef DEBUG
-    printf("input sequence:%s",input_seq);
+    printf("input sequence:%s\n",input_seq);
 #endif
+    struct timeval tv;
+    struct timeval tv1;
+    struct timeval tv2;
     
     if(POLICY == 0){ //FIFO
         int FRAME_1 = FRAMES;
         queue* q = (queue*) malloc(sizeof(queue));
+        gettimeofday(&tv, NULL);
         do_fifo(q, input_seq, FRAMES);
+        gettimeofday(&tv1, NULL);
         do_optimal(input_seq, FRAME_1);
+        gettimeofday(&tv2, NULL);
         //printf("\n%d",PAGE_REPLACEMENT);
-        printf("\n");
-        printf("# of page replacements with FIFO	:%d \n",PAGE_REPLACEMENT);
-        printf("# of page replacements with OPTIMAL	:%d \n",PAGE_REPLACEMENT_OPT);
+        printf("# of page replacements with FIFO        :%d \n",PAGE_REPLACEMENT);
+        printf("# of page replacements with OPTIMAL     :%d \n",PAGE_REPLACEMENT_OPT);
     }
     else if(POLICY == 1){ //LFU
         int FRAME_1 = FRAMES;
+        gettimeofday(&tv, NULL);
         do_lfu(input_seq, FRAMES);
+        gettimeofday(&tv1, NULL);
         do_optimal(input_seq, FRAME_1);
-        printf("\n");
-        printf("# of page replacements with LFU 	:%d \n",PAGE_REPLACEMENT);
-        printf("# of page replacements with OPTIMAL	:%d \n",PAGE_REPLACEMENT_OPT);
+        gettimeofday(&tv2, NULL);
+        printf("# of page replacements with LFU         :%d \n",PAGE_REPLACEMENT);
+        printf("# of page replacements with OPTIMAL     :%d \n",PAGE_REPLACEMENT_OPT);
     }
     else if(POLICY == 2){ //LRU-STACK
         int FRAME_1 = FRAMES;
         Queue *pq = InitQueue();
+        gettimeofday(&tv, NULL);
         do_lru_stack(pq, input_seq, FRAMES);
+        gettimeofday(&tv1, NULL);
         do_optimal(input_seq, FRAME_1);
-        printf("\n");
-        printf("# of page replacements with LRU-STACK :%d \n",PAGE_REPLACEMENT);
-        printf("# of page replacements with OPTIMAL	:%d \n",PAGE_REPLACEMENT_OPT);
+        gettimeofday(&tv2, NULL);
+        printf("# of page replacements with LRU-STACK   :%d \n",PAGE_REPLACEMENT);
+        printf("# of page replacements with OPTIMAL     :%d \n",PAGE_REPLACEMENT_OPT);
     }
+    else if(POLICY == 3){ // LRU-CLOCK
+        int FRAME_1 = FRAMES;
+        Queue *pq = InitQueue();
+        gettimeofday(&tv, NULL);
+        do_lru_clock(pq, input_seq, FRAMES);
+        gettimeofday(&tv1, NULL);
+        do_optimal(input_seq, FRAME_1);
+        gettimeofday(&tv2, NULL);
+        printf("# of page replacements with LRU-CLOCK   :%d \n",PAGE_REPLACEMENT);
+        printf("# of page replacements with OPTIMAL  	:%d \n",PAGE_REPLACEMENT_OPT);
+    }
+    else if (POLICY == 4){ // LRU-REF8 
+        int FRAME_1 = FRAMES;
+        Queue *pq = InitQueue();
+        gettimeofday(&tv, NULL);
+        do_lru_ref8(pq, input_seq, FRAMES);
+        gettimeofday(&tv1, NULL);
+        do_optimal(input_seq, FRAME_1);
+        gettimeofday(&tv2, NULL);
+        printf("# of page replacements with LRU-REF8    :%d \n",PAGE_REPLACEMENT);
+        printf("# of page replacements with OPTIMAL     :%d \n",PAGE_REPLACEMENT_OPT);
+    }
+    float penalty = ((PAGE_REPLACEMENT-PAGE_REPLACEMENT_OPT)*1.0 / (PAGE_REPLACEMENT_OPT))*100;
+    printf("%% page replacement penalty using %s \t:%4.1f%%\n\n",POLICY_R,penalty);
+
+    int k1 = (uint)tv1.tv_usec - (uint)tv.tv_usec;
+    int k2 = (uint)tv2.tv_usec - (uint)tv1.tv_usec;
+    float faster = ((k2-k1)*1.0 / (k2))*100;
+    printf("Total time to run %s algorithm        : %d msec\n",POLICY_R,k1);
+    printf("Total time to run Optimal algorithm     : %d msec\n",k2);
+    printf("%s is %4.1f%% faster than Optimal algorithm. \n",POLICY_R,faster);
     
     return 0;
 }
+
 
 
